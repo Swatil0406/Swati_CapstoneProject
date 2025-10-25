@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: swati599/backend-app:5
+          image: swati599/backend-app:10
           ports:
             - containerPort: 8080
           envFrom:

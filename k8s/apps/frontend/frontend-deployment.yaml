@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: swati599/frontend-app:5
+          image: swati599/frontend-app:10
           ports:
             - containerPort: 3000
           env:
