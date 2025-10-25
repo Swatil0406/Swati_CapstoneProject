@@ -18,5 +18,5 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: BACKEND_URL
+            - name: REACT_APP_BACKEND_URL
               value: "http://backend-service:8080"
