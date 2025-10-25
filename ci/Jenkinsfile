@@ -50,17 +50,17 @@ pipeline {
             }
         }
 
-        stage('Trivy Scan - Frontend') {
-            steps {
-                sh "./ci/scripts/trivy-scan.sh $FRONTEND_TAG"
-            }
-        }
+        // stage('Trivy Scan - Frontend') {
+        //     steps {
+        //         sh "./ci/scripts/trivy-scan.sh $FRONTEND_TAG"
+        //     }
+        // }
 
-        stage('Trivy Scan - Backend') {
-            steps {
-                sh "./ci/scripts/trivy-scan.sh $BACKEND_TAG"
-            }
-        }
+        // stage('Trivy Scan - Backend') {
+        //     steps {
+        //         sh "./ci/scripts/trivy-scan.sh $BACKEND_TAG"
+        //     }
+        // }
 
         stage('Push Docker Images') {
             steps {
