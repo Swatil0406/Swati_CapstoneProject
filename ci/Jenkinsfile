@@ -1,0 +1,98 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+        FRONTEND_REPO = 'kishan7798/frontend-app'
+        BACKEND_REPO  = 'kishan7798/backend-app'
+        GIT_CREDENTIALS  = credentials('github-credentials')
+        FRONTEND_TAG = "${env.FRONTEND_REPO}:${env.BUILD_NUMBER}"
+        BACKEND_TAG  = "${env.BACKEND_REPO}:${env.BUILD_NUMBER}"
+
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Dharmendra7798/Dharmendra_CapstoneProject.git'
+            }
+        }
+
+        // stage('Code Quality - SonarQube') {
+        //     steps {
+        //         withSonarQubeEnv('SonarQube') {
+        //             sh 'sonar-scanner -Dsonar.projectKey=your-project'
+        //         }
+        //     }
+        // }
+
+        // stage('Dependency Check (OWASP)') {
+        //     steps {
+        //         sh './ci/scripts/dependency-check.sh'
+        //     }
+        // }
+
+        stage('File Security Scan') {
+            steps {
+                sh './ci/scripts/file-scan.sh'
+            }
+        }
+
+        stage('Docker Build - Frontend') {
+            steps {
+                sh "docker build -t $FRONTEND_TAG ./Application-Code/frontend"
+            }
+        }
+
+        stage('Docker Build - Backend') {
+            steps {
+                sh "docker build -t $BACKEND_TAG ./Application-Code/backend"
+            }
+        }
+
+        stage('Trivy Scan - Frontend') {
+            steps {
+                sh "./ci/scripts/trivy-scan.sh $FRONTEND_TAG"
+            }
+        }
+
+        stage('Trivy Scan - Backend') {
+            steps {
+                sh "./ci/scripts/trivy-scan.sh $BACKEND_TAG"
+            }
+        }
+
+        stage('Push Docker Images') {
+            steps {
+                sh '''
+                    echo \$DOCKERHUB_CREDENTIALS_PSW | docker login -u \$DOCKERHUB_CREDENTIALS_USR --password-stdin
+                    docker push $FRONTEND_TAG
+                    docker push $BACKEND_TAG
+                '''
+            }
+        }
+
+        stage('Update Manifests in GitHub') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-credentials',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_PASS'
+                )]) {
+                    sh """
+                        ./ci/scripts/update-manifests.sh $FRONTEND_TAG $BACKEND_TAG $GIT_USER $GIT_PASS
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'CI Pipeline completed successfully!'
+        }
+        failure {
+            echo 'CI Pipeline failed.'
+        }
+    }
+}
