@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-        FRONTEND_REPO = 'kishan7798/frontend-app'
-        BACKEND_REPO  = 'kishan7798/backend-app'
+        FRONTEND_REPO = 'swati599/frontend-app'
+        BACKEND_REPO  = 'swati599/backend-app'
         GIT_CREDENTIALS  = credentials('github-credentials')
         FRONTEND_TAG = "${env.FRONTEND_REPO}:${env.BUILD_NUMBER}"
         BACKEND_TAG  = "${env.BACKEND_REPO}:${env.BUILD_NUMBER}"
@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Dharmendra7798/Dharmendra_CapstoneProject.git'
+                git branch: 'main', url: 'https://github.com/Swatil0406/Swati_CapstoneProject.git'
             }
         }
 

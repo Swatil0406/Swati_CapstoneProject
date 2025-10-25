@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/Dharmendra7798/Dharmendra_CapstoneProject.git'
+    repoURL: 'https://github.com/Swatil0406/Swati_CapstoneProject.git'
     targetRevision: main
     path: 'k8s'        
     directory:
