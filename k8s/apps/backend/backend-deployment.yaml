@@ -16,7 +16,7 @@ spec:
         - name: backend
           image: swati599/backend-app:10
           ports:
-            - containerPort: 8080
+            - containerPort: 3500
           envFrom:
             - configMapRef:
                 name: app-config
@@ -25,3 +25,5 @@ spec:
               value: "mongodb://mongo:27017/tasksdb"
             - name: USE_DB_AUTH
               value: "false"
+            - name: PORT
+              value: "3500"
