@@ -23,4 +23,4 @@ git add ./k8s/apps
 git diff --cached --quiet || git commit -m "Update frontend & backend images to latest"
 
 # Push using credentials
-git push https://$GIT_USER:$GIT_PASS@https://github.com/Swatil0406/Swati_CapstoneProject.git main
+git push https://$GIT_USER:$GIT_PASS@github.com/Swatil0406/Swati_CapstoneProject.git main
