@@ -22,7 +22,7 @@ spec:
                 name: app-config
           env:
             - name: MONGO_CONN_STR
-              value: "mongodb://mongo:27017/tasksdb"
+              value: "mongodb://mongo-service:27017/tasksdb"
             - name: USE_DB_AUTH
               value: "false"
             - name: PORT
