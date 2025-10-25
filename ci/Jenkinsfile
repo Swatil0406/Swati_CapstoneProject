@@ -40,13 +40,13 @@ pipeline {
 
         stage('Docker Build - Frontend') {
             steps {
-                sh "docker build --platform linux/amd64,linux/arm64 -t $FRONTEND_TAG ./Application-Code/frontend"
+                sh "docker build --platform "linux/amd64,linux/arm64" -t $FRONTEND_TAG ./Application-Code/frontend"
             }
         }
 
         stage('Docker Build - Backend') {
             steps {
-                sh "docker build --platform linux/amd64,linux/arm64 -t $BACKEND_TAG ./Application-Code/backend"
+                sh "docker build --platform "linux/amd64,linux/arm64" -t $BACKEND_TAG ./Application-Code/backend"
             }
         }
 
